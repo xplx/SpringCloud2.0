@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: cloud-actuator
+server:
+  port: 9010
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*' #显示所有节点
+  endpoint:
+    health:
+      show-details: always
+    shutdown:
+      enabled: true  #使用post时可以请求关闭服务
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:9000/eureka/
+

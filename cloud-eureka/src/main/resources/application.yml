@@ -1,0 +1,24 @@
+server:
+  port: 9000
+eureka:
+  instance:
+    hostname: localhost
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ipAddress}:${server.port}
+  #\u0368\uFFFD\uFFFDeureka.client.registerWithEureka\uFFFD\uFFFDfalse\uFFFD\uFFFDfetchRegistry\uFFFD\uFFFDfalse\uFFFD\uFFFD\uFFFD\uFFFD\uFFFD\uFFFD\uFFFD\u053C\uFFFD\uFFFD\uFFFD\u04BB\uFFFD\uFFFDeureka server.
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+spring:
+  application:
+    name: cloud-eurka
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always

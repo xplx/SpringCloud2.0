@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/SpringCloud2.0.iml" filepath="$PROJECT_DIR$/.idea/SpringCloud2.0.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cloud-actuator/cloud-actuator.iml" filepath="$PROJECT_DIR$/cloud-actuator/cloud-actuator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cloud-admin-client/cloud-admin-client.iml" filepath="$PROJECT_DIR$/cloud-admin-client/cloud-admin-client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cloud-admin-server/cloud-admin-server.iml" filepath="$PROJECT_DIR$/cloud-admin-server/cloud-admin-server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cloud-eureka/cloud-eureka.iml" filepath="$PROJECT_DIR$/cloud-eureka/cloud-eureka.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cloud-feign/cloud-feign.iml" filepath="$PROJECT_DIR$/cloud-feign/cloud-feign.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cloud-gateway/cloud-gateway.iml" filepath="$PROJECT_DIR$/cloud-gateway/cloud-gateway.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cloud-hystrix/cloud-hystrix.iml" filepath="$PROJECT_DIR$/cloud-hystrix/cloud-hystrix.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cloud-producer/cloud-producer.iml" filepath="$PROJECT_DIR$/cloud-producer/cloud-producer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cloud-producer-two/cloud-producer-two.iml" filepath="$PROJECT_DIR$/cloud-producer-two/cloud-producer-two.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cloud-ribbon/cloud-ribbon.iml" filepath="$PROJECT_DIR$/cloud-ribbon/cloud-ribbon.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cloud-sleuth/cloud-sleuth.iml" filepath="$PROJECT_DIR$/cloud-sleuth/cloud-sleuth.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cloud-zuul/cloud-zuul.iml" filepath="$PROJECT_DIR$/cloud-zuul/cloud-zuul.iml" />
+    </modules>
+  </component>
+</project>

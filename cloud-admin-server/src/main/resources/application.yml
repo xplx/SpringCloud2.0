@@ -1,0 +1,48 @@
+spring:
+  application:
+    name: admin-server
+  security:
+    user:
+      name: "admin"
+      password: "admin"
+server:
+  port: 9008
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:9000/eureka/
+  instance:
+    health-check-url-path: /actuator/health
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+    metadata-map:
+      user.name: ${spring.security.user.name}
+      user.password: ${spring.security.user.password}
+info:
+  version: @project.version@
+  groupId: @project.groupId@
+  artifactId: @project.artifactId@
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+  endpoint:
+    health:
+      show-details: always
+
+---
+spring:
+  mail:
+    host: smtp.163.com
+    username: xplx12@163.com
+    password: wxp123456 #邮箱授权码，不是密码
+  boot:
+    admin:
+      notify:
+        mail:
+          to: xplx12@163.com
+          from: xplx12@163.com
+          enabled: true
+          # ignore-changes: UNKNOWN:UP,UNKNOWN:OFFLINE,OFFLINE:UP #忽略变化

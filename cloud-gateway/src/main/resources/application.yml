@@ -1,0 +1,85 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:9000/eureka/
+server:
+  port: 9007
+
+#再建一个配置文件，语法是三个横线
+spring:
+  application:
+    name: cloud-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+  redis:
+    host: localhost
+    password: 123456
+    port: 6379
+#通过注册中心转发服务，通过网关访问服务语法：http://网关地址：端口/服务中心注册 serviceId/具体的url
+#---
+#spring:
+#  cloud:
+#    gateway:
+#      routes:
+#        - id: add_request_parameter_route
+#          #格式为：lb://应用注册服务名
+#          uri: lb://cloud-producer
+#          filters:
+#            - AddRequestParameter=foo, bar #这样就会给匹配的每个请求添加上foo=bar的参数和值。
+#          predicates:
+#            - Method=GET
+
+#熔断
+---
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: hystrix_route
+          uri: lb://cloud-producer
+          predicates:
+            - Path=/**
+          filters:
+            - StripPrefix=1
+            - name: Hystrix
+              args:
+                name: fallbackcmd
+                fallbackUri: forward:/fallback
+hystrix.command.fallbackcmd.execution.isolation.thread.timeoutInMilliseconds: 5000
+#路由器限流
+---
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: requestratelimiter_route
+          uri: lb://cloud-producer
+          filters:
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 1
+                redis-rate-limiter.burstCapacity: 2
+                key-resolver: "#{@hostAddrKeyResolver}"
+          predicates:
+            - Method=GET
+#重试路由
+#---
+#spring:
+#  cloud:
+#    gateway:
+#      routes:
+#        - id: retry_test
+#          uri: lb://cloud-producer
+#          predicates:
+#            - Path=/retry
+#          filters:
+#            - name: Retry
+#              args:
+#                retries: 3
+#                statuses: BAD_GATEWAY
+
+
+
