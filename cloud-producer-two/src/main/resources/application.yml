@@ -3,16 +3,39 @@ server:
 spring:
   application:
     name: cloud-producer
+#健康监控
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+
+#consul注册中心
+---
+spring:
   cloud:
-    inetutils:
-      default-ip-address:
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:9000/eureka/
-  instance:
-    prefer-ip-address: true
-    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        service-name: cloud-producer
+        enabled: true
+        register: true #自动注册
+        healthCheckInterval: 15s #每隔10s检查
+        health-check-timeout: 1s
+        instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${server.port}
+        tags: dev
+        hostname: ${spring.cloud.client.ip-address} #实例名称
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: http://localhost:9000/eureka/
+#  instance:
+#    prefer-ip-address: true
+#    instance-id: ${spring.cloud.client.ip-address}:${server.port}
 
 #链路跟踪
 ---
@@ -25,3 +48,19 @@ spring:
       probability: 1.0 # 将采样比例设置为 1.0，也就是全部都需要。默认是 0.1
   zipkin:
     base-url: http://localhost:9411/ # 指定了 Zipkin 服务器的地址
+
+#consul注册中心
+---
+spring:
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        service-name: cloud-producer
+        enabled: true
+        register: true
+        healthCheckInterval: 15s
+        health-check-timeout: 1s
+        instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${server.port}
+        tags: dev

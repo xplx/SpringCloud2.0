@@ -1,4 +1,8 @@
 spring:
+  boot:
+    admin:
+      discovery:
+        ignored-services: consul #忽略该服务，不然会报错
   application:
     name: admin-server
   security:
@@ -7,30 +11,30 @@ spring:
       password: "admin"
 server:
   port: 9008
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:9000/eureka/
-  instance:
-    health-check-url-path: /actuator/health
-    prefer-ip-address: true
-    instance-id: ${spring.cloud.client.ip-address}:${server.port}
-    metadata-map:
-      user.name: ${spring.security.user.name}
-      user.password: ${spring.security.user.password}
-info:
-  version: @project.version@
-  groupId: @project.groupId@
-  artifactId: @project.artifactId@
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include:
-  endpoint:
-    health:
-      show-details: always
+#eureka:
+#  client:
+#    serviceUrl:
+#      defaultZone: http://localhost:9000/eureka/
+#  instance:
+#    health-check-url-path: /actuator/health
+#    prefer-ip-address: true
+#    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+#    metadata-map:
+#      user.name: ${spring.security.user.name}
+#      user.password: ${spring.security.user.password}
+#info:
+#  version: @project.version@
+#  groupId: @project.groupId@
+#  artifactId: @project.artifactId@
+#
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include: '*'
+#  endpoint:
+#    health:
+#      show-details: always
 
 ---
 spring:
@@ -46,3 +50,19 @@ spring:
           from: xplx12@163.com
           enabled: true
           # ignore-changes: UNKNOWN:UP,UNKNOWN:OFFLINE,OFFLINE:UP #忽略变化
+
+#consul注册中心
+---
+spring:
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        service-name: admin-server
+        enabled: true
+        register: true
+        healthCheckInterval: 15s
+        health-check-timeout: 1s
+        instance-id: ${spring.application.name}:${spring.cloud.consul.discovery.instance_id:${random.value}}
+        tags: dev

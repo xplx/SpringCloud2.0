@@ -1,13 +1,27 @@
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:9000/eureka/
+#eureka:
+#  client:
+#    serviceUrl:
+#      defaultZone: http://localhost:9000/eureka/
 server:
   port: 9005
 spring:
   application:
     name: cloud-feign
+  profiles:
+    active: dev
 
+#健康监控
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+
+foo:
+  bar: bar1
 #链路跟踪
 ---
 spring:

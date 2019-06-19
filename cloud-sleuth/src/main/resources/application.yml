@@ -1,9 +1,26 @@
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:9000/eureka/
+#eureka:
+#  client:
+#    serviceUrl:
+#      defaultZone: http://localhost:9000/eureka/
 server:
   port: 9007
 spring:
   application:
     name: cloud-sluth
+
+#consul注册中心
+---
+spring:
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        service-name: cloud-producer
+        enabled: true
+        register: true #自动注册
+        healthCheckInterval: 15s #每隔10s检查
+        health-check-timeout: 1s
+        instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${server.port}
+        tags: dev #标签
+        hostname: ${spring.cloud.client.ip-address}

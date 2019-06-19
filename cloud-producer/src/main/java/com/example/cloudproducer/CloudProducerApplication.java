@@ -3,7 +3,7 @@ package com.example.cloudproducer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author wuxiaopeng
  * @date 2019-05-13
  */
-@EnableEurekaClient
+@EnableDiscoveryClient
 @RestController
 @SpringBootApplication
 public class CloudProducerApplication {

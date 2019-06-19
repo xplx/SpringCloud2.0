@@ -1,0 +1,35 @@
+server:
+  port: 9011
+spring:
+  profiles:
+    active: jdbc #spring\u8BFB\u53D6\u7684\u914D\u7F6E\u6587\u4EF6\u540D\uFF0C\u4ECE\u6570\u636E\u5E93\u4E2D\u8BFB\u53D6\uFF0C\u5FC5\u987B\u4E3Ajdbc
+  application:
+    name: cloud-config
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/config-jdbc?useUnicode=true&characterEncoding=utf8&characterSetResults=utf8&serverTimezone=GMT%2B8
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
+  cloud:
+    config:
+      label: master
+      server:
+        jdbc: true
+spring.cloud.config.server.jdbc.sql: SELECT key1, value1 from config_properties where APPLICATION=? and PROFILE=? and LABEL=?
+
+#consul\u6CE8\u518C\u4E2D\u5FC3
+---
+spring:
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        service-name: cloud-producer
+        enabled: true
+        register: true #\u81EA\u52A8\u6CE8\u518C
+        healthCheckInterval: 15s #\u6BCF\u969410s\u68C0\u67E5
+        health-check-timeout: 1s
+        instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${server.port}
+        tags: dev #\u6807\u7B7E
+        hostname: ${spring.cloud.client.ip-address}

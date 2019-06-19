@@ -1,0 +1,22 @@
+#consul注册中心，config配置需要在bootstrap中配置才生效。
+spring:
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        service-name: cloud-feign
+        enabled: true
+        register: true #自动注册
+        healthCheckInterval: 15s #每隔10s检查
+        health-check-timeout: 1s
+        instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${server.port}
+        tags: dev
+        hostname: ${spring.cloud.client.ip-address} #实例名称
+      config:
+        enabled: true
+        format: yaml #采用YAML格式
+        prefix: config #根目录名为config
+        defaultContext: application #application 表示配置文件对应的应用名称
+        profile-separator: ':'
+        data-key: data
