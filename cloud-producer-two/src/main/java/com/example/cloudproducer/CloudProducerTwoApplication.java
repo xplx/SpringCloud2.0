@@ -8,12 +8,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * @author wuxiaopeng
  * @date 2019-05-13
  */
 @EnableDiscoveryClient
-@RestController
 @SpringBootApplication
 public class CloudProducerTwoApplication {
 
@@ -21,23 +23,5 @@ public class CloudProducerTwoApplication {
         SpringApplication.run(CloudProducerTwoApplication.class, args);
     }
 
-    @Value("${server.port}")
-    String port;
 
-    @RequestMapping("/hi")
-    public String home(@RequestParam (value = "name", defaultValue = "forezp") String name){
-        return "hi " + name + ", i am form port:" + port;
-    }
-
-    @RequestMapping("/foo")
-    public String foo(String foo) {
-        return "hello "+foo+"! " + "i am form port:"+ port;
-    }
-
-    @RequestMapping("/fallback")
-    public String fallback(String foo) {
-        int i = 0;
-        System.out.println("熔断" + i++);
-        return "fallback "+foo+"! " + "fallback:"+ port;
-    }
 }

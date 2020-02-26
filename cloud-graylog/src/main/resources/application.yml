@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: cloud-graylog
+  cloud:
+    consul:
+      discovery:
+        instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${server.port}
+        register: true
+        prefer-ip-address: true
+        healthCheckPath: /actuator/health
+        health-check-interval: 15s
+        service-name: ${spring.application.name}
+        hostname: ${spring.cloud.client.ip-address}
+        tags: version=1.0.0,author=yangxiufeng
+      host: 10.10.11.64
+      port: 8500
+server:
+  port: 9009
+
+# graylog
+graylog.graylogHost: 10.10.11.103
+graylog.graylogPort: 28082
+graylog.app_name: cloud-graylog
+address.ip: ${spring.cloud.client.ip-address}

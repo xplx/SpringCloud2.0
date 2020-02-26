@@ -1,17 +1,50 @@
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:9000/eureka/
 server:
-  port: 9006
+  port: 9999
 spring:
   application:
-    name: cloud-zuul
+    name: cloud-gateway
+  profiles:
+    active: dev
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    joda-date-time-format: yyyy-MM-dd HH:mm:ss
+    locale: zh_CN
+    time-zone: GMT+8
+  cloud:
+    loadbalancer:
+      retry:
+        enabled: true #开启轮询机制
+
+#网关开启重试机制
 zuul:
-  routes:
-    api-a:
-      path: /api-a/**
-      serviceId: cloud-ribbon
-    api-b:
-      path: /api-b/**
-      serviceId: cloud-feign
+  host:
+    connect-timeout-millis: 10000
+  sensitive-headers:
+  retryable: true
+
+#开启熔断
+feign:
+  httpclient:
+    enabled: true
+  hystrix:
+    enabled: true
+
+#开启轮询
+ribbon:
+  restclient:
+    enabled: true
+  ReadTimeout: 5000
+  ConnectTimeout: 3000
+  MaxAutoRetries: 0
+  MaxAutoRetriesNextServer: 1
+
+#熔断超时时间设置
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          enable: true
+        isolation:
+          thread:
+            timeoutInMilliseconds: 1000

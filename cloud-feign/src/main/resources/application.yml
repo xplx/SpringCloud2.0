@@ -1,7 +1,7 @@
-#eureka:
-#  client:
-#    serviceUrl:
-#      defaultZone: http://localhost:9000/eureka/
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:9000/eureka/
 server:
   port: 9005
 spring:
@@ -23,13 +23,41 @@ management:
 foo:
   bar: bar1
 #链路跟踪
----
-spring:
-  sleuth:
-    web:
-      client:
-        enabled: true #web开启sleuth功能
-    sampler:
-      probability: 1.0 # 将采样比例设置为 1.0，也就是全部都需要。默认是 0.1
-  zipkin:
-    base-url: http://localhost:9411/ # 指定了 Zipkin 服务器的地址
+#---
+#spring:
+#  sleuth:
+#    web:
+#      client:
+#        enabled: true #web开启sleuth功能
+#    sampler:
+#      probability: 1.0 # 将采样比例设置为 1.0，也就是全部都需要。默认是 0.1
+#  zipkin:
+#    base-url: http://localhost:9411/ # 指定了 Zipkin 服务器的地址
+feign:
+  hystrix:
+    enabled: true
+#  client:
+#    config:
+#      default:
+#        connectTimeout: 5000
+#        readTimeout: 5000
+#熔断时间:当调用服务时间大于此时间将会进入熔断
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          strategy: SEMAPHORE
+          thread:
+            timeoutInMilliseconds: 50000
+
+##ribbonTimeout = (ReadTimeout + ConnectTimeout) * (maxAutoRetries + 1) * (maxAutoRetriesNextServer + 1);
+#5000>(3500+1000) *(0+1)*(0+1)
+#ConnectTimeout:指的是建立连接所用的时间。
+#ReadTimeout：指的是建立连接后从服务器读取到可用资源所用的时间。
+ribbon:
+  ReadTimeout: 12000
+  ConnectTimeout: 1000
+  MaxAutoRetries: 0
+  MaxAutoRetriesNextServer: 1
+
