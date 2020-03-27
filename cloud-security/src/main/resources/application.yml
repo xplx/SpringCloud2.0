@@ -1,0 +1,10 @@
+server:
+  port: 9401
+spring:
+  application:
+    name: cloud-security
+  redis:
+    host: localhost
+    password: 123456
+    database: 1
+    port: 6379

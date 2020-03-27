@@ -57,14 +57,17 @@ spring:
       routes:
         - id: requestratelimiter_route
           uri: lb://cloud-producer
+          predicates:
+          - Path=/api/producer/**
           filters:
+            - StripPrefix=2
             - name: RequestRateLimiter
               args:
-                redis-rate-limiter.replenishRate: 1
-                redis-rate-limiter.burstCapacity: 2
-                key-resolver: "#{@hostAddrKeyResolver}"
-          predicates:
-            - Method=GET
+                redis-rate-limiter.replenishRate: 1 #令牌桶每秒填充平均速率
+                redis-rate-limiter.burstCapacity: 1 #令牌桶总容量
+                key-resolver: "#{@ipKeyResolver}"
+
+
 #重试路由
 #---
 #spring:
