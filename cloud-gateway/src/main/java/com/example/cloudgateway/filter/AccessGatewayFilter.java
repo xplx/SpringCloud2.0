@@ -15,7 +15,7 @@ import java.util.LinkedHashSet;
 
 /**
  * @author wuxiaopeng
- * @description:
+ * @description: 全局过滤器
  * @date 2020/3/27 10:24
  */
 @Configuration

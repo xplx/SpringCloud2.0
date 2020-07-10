@@ -19,7 +19,7 @@ spring:
     password: 123456
     port: 6379
 #通过注册中心转发服务，通过网关访问服务语法：http://网关地址：端口/服务中心注册 serviceId/具体的url
-#---
+#--- 路由断言
 #spring:
 #  cloud:
 #    gateway:
@@ -31,6 +31,7 @@ spring:
 #            - AddRequestParameter=foo, bar #这样就会给匹配的每个请求添加上foo=bar的参数和值。
 #          predicates:
 #            - Method=GET
+
 
 #熔断
 ---
@@ -49,6 +50,7 @@ spring:
                 name: fallbackcmd
                 fallbackUri: forward:/fallback
 hystrix.command.fallbackcmd.execution.isolation.thread.timeoutInMilliseconds: 5000
+
 #路由器限流
 ---
 spring:
